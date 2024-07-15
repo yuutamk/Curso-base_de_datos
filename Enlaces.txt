@@ -1,0 +1,12 @@
+Crear diagramas ----> https://online.visual-paradigm.com/app/diagrams/#diagram:proj=0&type=ERDiagram
+                      https://app.diagrams.net/  
+                      https://dbdiagram.io/home
+                      https://www.lucidchart.com/pages/
+                      https://www.quickdatabasediagrams.com/
+                      https://erdplus.com/
+                      https://nulab.com/es/cacoo/examples/database-diagrams-er-diagram-tool/
+                      https://drawsql.app/
+                      https://miro.com/es/
+                      https://www.gliffy.com/solutions/diagrams-for-software-engineering
+                      https://creately.com/
+                      
