@@ -233,3 +233,79 @@ Existen tres tipos principales de cardinalidad que se representan en los Diagram
    **Ejemplo:**
    - Los estudiantes pueden inscribirse en varios cursos.
    - Los productos pueden ser vendidos por múltiples proveedores.
+
+
+El diseño de bases de datos no termina con los diagramas de entidades y relaciones. Una vez que el modelo lógico está listo, es hora de traducirlo a un diagrama físico, que define cómo se almacenarán realmente los datos en la base de datos. En este blog, exploraremos la importancia del diagrama físico, los tipos de datos y los constraints que aseguran la integridad y eficiencia de los datos.
+
+## Diagrama Físico
+
+Un diagrama físico es una representación detallada de cómo se implementarán las estructuras de datos en un sistema de gestión de bases de datos (SGBD). Este diagrama incluye las tablas, columnas, tipos de datos, índices y constraints (restricciones) que garantizan la integridad de los datos. Mientras que el modelo lógico se centra en qué datos se almacenan, el diagrama físico se ocupa de cómo y dónde se almacenan.
+
+## Tipos de Datos
+
+Elegir los tipos de datos correctos es crucial para la eficiencia y precisión del almacenamiento de datos. Los tipos de datos definen el tipo de información que se puede almacenar en una columna de una tabla. Aquí hay algunos de los tipos de datos más comunes:
+
+![tipos datos](/SQL/src/tiposDatos.jpg)
+
+### 1. Numéricos
+
+- **INT:** Enteros sin decimales. Ideal para contar o identificar datos.
+- **FLOAT/DOUBLE:** Números con decimales. Útil para cálculos precisos.
+- **DECIMAL:** Números decimales con una precisión fija. Perfecto para valores monetarios.
+
+### 2. Carácter y Cadena
+
+- **CHAR:** Cadenas de longitud fija. Bueno para datos de longitud constante, como códigos postales.
+- **VARCHAR:** Cadenas de longitud variable. Ideal para nombres y descripciones.
+- **TEXT:** Cadenas de longitud variable grandes. Útil para comentarios y descripciones largas.
+
+### 3. Fecha y Hora
+
+- **DATE:** Solo fecha. Para almacenar fechas sin hora.
+- **TIME:** Solo hora. Para almacenar horas sin fecha.
+- **DATETIME/TIMESTAMP:** Fecha y hora. Útil para marcar eventos.
+
+### 4. Booleanos
+
+- **BOOLEAN:** Verdadero o falso. Ideal para banderas y estados.
+
+### 5. Binarios
+
+- **BLOB:** Datos binarios grandes. Útil para almacenar imágenes y archivos.
+
+![tipos de datos](/SQL/src/tiposDatos2.jpg)
+
+## Constraints (restricciones)
+
+Las constraints son reglas aplicadas a las columnas de las tablas para asegurar la precisión y consistencia de los datos. Aquí hay algunas de las constraints más comunes:
+
+![restricciones](/SQL/src/restricciones.jpg)
+
+
+* NOT NULL: Se asegura que la columna no tenga valores nulos
+* UNIQUE: Se asegura que cada valor en la columna no se repita
+* PRIMARY KEY: Es una combinación de NOT NULL y UNIQUE
+* FOREIGN KEY: Identifica de manera única una tupla en otra tabla
+* CHECK: Se asegura que el valor en la columna cumpla una condición dada
+* DEFAULT: Coloca un valor por defecto cuando no hay un valor especificado
+* INDEX: Se crea por columna para permitir búsquedas más rápidas
+
+
+## Importancia del Diagrama Físico en el Diseño de Bases de Datos
+
+### 1. Rendimiento Optimizado
+
+El diagrama físico permite elegir los tipos de datos y constraints adecuados, lo que optimiza el rendimiento de la base de datos. Por ejemplo, usar `INT` en lugar de `VARCHAR` para claves primarias mejora la velocidad de las consultas.
+
+### 2. Integridad y Precisión de los Datos
+
+Las constraints garantizan que los datos sean precisos y consistentes. Por ejemplo, una clave foránea asegura que no se puedan agregar registros huérfanos en una tabla secundaria.
+
+### 3. Eficiencia en el Almacenamiento
+
+Elegir los tipos de datos correctos también mejora la eficiencia del almacenamiento. Por ejemplo, usar `CHAR(5)` en lugar de `VARCHAR(50)` para códigos postales ahorra espacio.
+
+### 4. Seguridad y Mantenimiento
+
+Las constraints facilitan el mantenimiento y la seguridad de la base de datos. Las restricciones de integridad referencial evitan la corrupción de datos, y las claves únicas impiden la duplicación de registros.
+
