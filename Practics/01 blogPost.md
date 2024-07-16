@@ -13,4 +13,13 @@ Trata de hacerlo por tu cuenta y despues usa el desplegable para poder completar
   <img src="./src/Diagramas blogpost.webp">
   </p>
   </details>
+  <br>
 
+Una vez creado tu diagrama puedes ahora crear tu diagrama fisico tomando en cuenta la normalización de datos
+
+<details>
+  <summary>Diagrama Físico</summary>
+  <p>
+  <img src="../SQL/src/Diagrama blogpost.png">
+  </p>
+  </details>

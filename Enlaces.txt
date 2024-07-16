@@ -9,4 +9,8 @@ Crear diagramas ----> https://online.visual-paradigm.com/app/diagrams/#diagram:p
                       https://miro.com/es/
                       https://www.gliffy.com/solutions/diagrams-for-software-engineering
                       https://creately.com/
+                      https://drawsql.app/
+
+SQL SGDB        ----> https://dev.mysql.com/downloads/file/?id=494866
+                                              
                       
