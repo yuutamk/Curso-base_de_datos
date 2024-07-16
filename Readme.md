@@ -309,3 +309,169 @@ Elegir los tipos de datos correctos también mejora la eficiencia del almacenami
 
 Las constraints facilitan el mantenimiento y la seguridad de la base de datos. Las restricciones de integridad referencial evitan la corrupción de datos, y las claves únicas impiden la duplicación de registros.
 
+# Alcanzando el Nirvana de las Bases de Datos: La Normalización
+
+En el mundo de las bases de datos relacionales, la normalización es una técnica fundamental que busca organizar los datos de manera eficiente, reduciendo la redundancia y asegurando la integridad de la información. Imagina que tu base de datos es un jardín zen: cada piedra, cada planta está cuidadosamente colocada para crear un equilibrio perfecto. La normalización es el proceso que permite alcanzar ese equilibrio. Como dijo Edgar Codd, tener una base de datos normalizada es como alcanzar el nirvana, la plenitud.
+
+## ¿Qué es la Normalización?
+
+La normalización es un proceso de organización de los datos en una base de datos para reducir la redundancia y mejorar la integridad de los datos. Este proceso implica dividir una base de datos en tablas más pequeñas y definir relaciones entre ellas según un conjunto de reglas conocidas como formas normales (FN).
+
+## Las Reglas de Edgar Codd: Las Formas Normales
+
+Edgar F. Codd, el padre del modelo relacional de bases de datos, definió una serie de reglas para lograr una base de datos normalizada. Cada regla se denomina forma normal (FN), y a medida que avanzamos de una forma normal a la siguiente, aumentamos el nivel de organización y eficiencia de la base de datos.
+
+![normalizacion](/SQL/src/sin%20normalizar.webp)
+
+Normalizada ![normalizada](/SQL/src/normalizada.webp)
+
+### 1. Primera Forma Normal (1NF)
+
+Para que una tabla esté en la primera forma normal (1NF), debe cumplir con los siguientes criterios:
+- Todos los atributos son atómicos. Un atributo es atómico si los elementos del dominio son simples e indivisibles.
+- Cada registro debe ser único.
+
+
+- No debe existir variación en el número de columnas.
+- Los campos no clave deben identificarse por la clave (dependencia funcional).
+- Debe existir una independencia del orden tanto de las filas como de las columnas; es decir, si los datos cambian de orden no deben cambiar sus significados.
+
+Se traduce básicamente a que si tenemos campos compuestos como por ejemplo “nombre_completo” que en realidad contiene varios datos distintos, en este caso podría ser “nombre”, “apellido_paterno”, “apellido_materno”, etc.
+
+También debemos asegurarnos que las columnas son las mismas para todos los registros, que no haya registros con columnas de más o de menos.
+
+Todos los campos que no se consideran clave deben depender de manera única por el o los campos que si son clave.
+
+Los campos deben ser tales que si reordenamos los registros o reordenamos las columnas, cada dato no pierda el significado.
+
+
+**Ejemplo:**
+
+![primera forma normal](/SQL/src/primera%20forma%20normal.jpg)
+
+Una tabla no normalizada podría tener:
+
+Empleado | Teléfonos
+---------|-----------------
+Juan     | 1234, 5678
+María    | 4321
+
+En 1NF, cada teléfono se almacena en una fila separada:
+
+Empleado | Teléfono
+---------|---------
+Juan     | 1234
+Juan     | 5678
+María    | 4321
+
+
+### 2. Segunda Forma Normal (2NF)
+
+
+
+Para que una tabla esté en la segunda forma normal (2NF), debe cumplir con los criterios de 1NF y, además:
+- Todos los atributos que no son clave principal deben depender únicamente de la clave principal.
+
+- Está en 1FN
+- Sí los atributos que no forman parte de ninguna clave dependen de forma completa de la clave principal. Es decir, que no existen dependencias parciales.
+
+Lo anterior quiere decir que sí tenemos datos que pertenecen a diversas entidades, cada entidad debe tener un campo clave separado.
+
+![segunda forma normal](/SQL/src/segunda%20forma%20normal2.jpg)
+
+
+En la tabla anterior tenemos por lo menos dos entidades que debemos separar para que cada uno dependa de manera única de su campo llave o ID. En este caso las entidades son alumnos por un lado y materias por el otro. En el ejemplo anterior, quedaría de la siguiente manera:
+
+![segunda forma normal](/SQL/src/segunda%20forma%20normal.jpg)
+
+**Ejemplo:**
+Una tabla en 1NF:
+
+PedidoID | Producto | Cantidad | PrecioTotal | ClienteNombre
+---------|----------|----------|-------------|---------------
+1        | Libro    | 2        | 40          | Ana
+2        | Pluma    | 5        | 25          | Juan
+
+En 2NF, dividimos la tabla para que los atributos dependan completamente de la clave primaria:
+
+PedidoID | Producto | Cantidad
+---------|----------|----------
+1        | Libro    | 2
+2        | Pluma    | 5
+
+ClienteID | PedidoID | ClienteNombre
+----------|----------|--------------
+1         | 1        | Ana
+2         | 2        | Juan
+
+
+### 3. Tercera Forma Normal (3NF)
+
+
+
+Para que una tabla esté en la tercera forma normal (3NF), debe cumplir con los criterios de 2NF y, además:
+- No existe ninguna dependencia funcional transitiva en los atributos que no son clave
+
+- Se encuentra en 2FN
+
+
+Esta FN se traduce en que aquellos datos que no pertenecen a la entidad deben tener una independencia de las demás y debe tener un campo clave propio. Continuando con el ejemplo anterior, al aplicar la 3FN separamos la tabla alumnos ya que contiene datos de los cursos en ella quedando de la siguiente manera.
+
+![tercera forma normal](/SQL/src/tercera%20forma%20normal%20jem1.webp)
+
+![tercera forma normal](/SQL/src/tercera%20forma%20normal%20jem2.webp)
+
+![tercera forma normal](/SQL/src/tercera%20forma%20normal.jpg)
+
+**Ejemplo:**
+Una tabla en 2NF:
+
+PedidoID | Producto | ClienteID | ClienteNombre
+---------|----------|-----------|---------------
+1        | Libro    | 1         | Ana
+2        | Pluma    | 2         | Juan
+
+En 3NF, eliminamos las dependencias transitivas:
+
+PedidoID | Producto | ClienteID
+---------|----------|-----------
+1        | Libro    | 1
+2        | Pluma    | 2
+
+ClienteID | ClienteNombre
+----------|--------------
+1         | Ana
+2         | Juan
+
+### 4. Cuarta Forma Normal (4NF)
+
+- Cumple 1FN, 2FN, 3FN 
+- los campos multivaluados se identifican por una clave única.
+
+
+
+Esta FN trata de eliminar registros duplicados en una entidad, es decir que cada registro tenga un contenido único y de necesitar repetir la data en los resultados se realiza a través de claves foráneas.
+
+Aplicado al ejemplo anterior la tabla materia se independiza y se relaciona con el alumno a través de una tabla transitiva o pivote, de tal manera que si cambiamos el nombre de la materia solamente hay que cambiarla una vez y se propagara a cualquier referencia que haya de ella.
+
+![cuarta forma normal](/SQL/src/cuarta%20forma%20normal%20ejem1.webp)
+
+![cuarta forma normal](/SQL/src/cuarta%20forma%20normal%20ejem2.webp)
+
+![cuarta forma normal](/SQL/src/cuarta%20forma%20normal.jpg)
+
+
+De esta manera, aunque parezca que la información se multiplicó, en realidad la descompusimos o normalizamos de manera que a un sistema le sea fácil de reconocer y mantener la consistencia de los datos.
+### Formas Normales Superiores
+
+Además de las tres primeras formas normales, existen formas normales superiores que abordan cuestiones más complejas de redundancia y dependencias:
+- **BCNF (Boyce-Codd Normal Form)**
+- **4NF (Cuarta Forma Normal)**
+- **5NF (Quinta Forma Normal)**
+- **6NF (Sexta Forma Normal)**
+
+Cada una de estas formas adicionales sigue refinando la estructura de la base de datos para asegurar que los datos estén lo más normalizados posible.
+
+## Beneficios de la Normalización
+
+La normalización reduce la redundancia de datos, lo que ahorra espacio de almacenamiento y facilita el mantenimiento. Además, mejora la integridad de los datos al asegurar relaciones correctas entre tablas y permite implementar restricciones de integridad referencial. Aunque puede requerir más operaciones de unión, las bases de datos normalizadas suelen ser más eficientes en consultas. Por último, la normalización proporciona flexibilidad y escalabilidad al facilitar la modificación y expansión de la base de datos sin problemas de redundancia o inconsistencias
