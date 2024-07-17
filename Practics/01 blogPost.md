@@ -17,9 +17,24 @@ Trata de hacerlo por tu cuenta y despues usa el desplegable para poder completar
 
 Una vez creado tu diagrama puedes ahora crear tu diagrama fisico tomando en cuenta la normalización de datos
 
+  Trata de hacerlo por tu cuenta y despues usa el desplegable para poder completar tu diagrama
+
 <details>
   <summary>Diagrama Físico</summary>
   <p>
   <img src="../SQL/src/Diagrama blogpost.png">
   </p>
   </details>
+
+  Normalizado
+
+<details>
+  <summary>Diagrama Físico normalizado</summary>
+  <p>
+  <img src="../SQL/src/diagrama%20blogpost%20normalizado.png">
+  </p>
+  </details>
+
+
+
+

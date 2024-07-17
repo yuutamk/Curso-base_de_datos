@@ -12,5 +12,16 @@ Crear diagramas ----> https://online.visual-paradigm.com/app/diagrams/#diagram:p
                       https://drawsql.app/
 
 SQL SGDB        ----> https://dev.mysql.com/downloads/file/?id=494866
-                                              
-                      
+
+SGDB online     ----> https://sqliteonline.com/
+
+Guia de instalacion SQL Server Windows ----> https://learn.microsoft.com/es-es/sql/database-engine/install-windows/install-sql-server?view=sql-server-ver16
+                                             https://www.youtube.com/watch?v=MnvxXo1DRzg
+
+Guia de instalacion de Laragon         ----> https://www.youtube.com/watch?v=KyKic5jTZkQ&t=824s
+phpMyAdmin en Laragon                  ----> https://www.youtube.com/watch?v=whXdCZ9j0cM
+  
+
+Servicio administrado de base de datos ----> https://www.000webhost.com/
+
+MySQL What is DDL, DML, DCL, and TCL?  ----> https://www.w3schools.in/mysql/ddl-dml-dcl/ 
