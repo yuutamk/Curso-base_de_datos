@@ -729,3 +729,324 @@ CREATE INDEX idx_nombre_producto ON productos(nombre);
 ```
 
 Este comando crea un índice llamado `idx_nombre_producto` en la columna `nombre` de la tabla `productos`.
+
+
+## La Estructura Básica de un Query SQL
+
+Vamos a desglosar un query SQL típico en sus componentes básicos para entender mejor cómo funciona. Tomaremos como ejemplo una consulta simple que recupera datos de una tabla.
+
+```sql
+SELECT columna1, columna2, ...
+FROM nombre_tabla
+WHERE condicion
+GROUP BY columna
+HAVING condicion
+ORDER BY columna
+LIMIT cantidad;
+```
+
+#### Componentes de un Query SQL
+
+1. **SELECT**: La cláusula `SELECT` se utiliza para especificar las columnas que queremos recuperar de la base de datos.
+   ```sql
+   SELECT nombre, edad, ciudad
+   ```
+
+2. **FROM**: La cláusula `FROM` indica la tabla de la cual queremos recuperar los datos.
+   ```sql
+   FROM usuarios
+   ```
+
+3. **WHERE**: La cláusula `WHERE` se usa para filtrar los registros que cumplen con una condición específica.
+   ```sql
+   WHERE edad > 18
+   ```
+
+4. **GROUP BY**: Esta cláusula se utiliza para agrupar los resultados por una o más columnas.
+   ```sql
+   GROUP BY ciudad
+   ```
+
+5. **HAVING**: Similar a `WHERE`, pero se aplica a grupos de datos, no a registros individuales.
+   ```sql
+   HAVING COUNT(*) > 1
+   ```
+
+6. **ORDER BY**: Ordena los resultados por una o más columnas.
+   ```sql
+   ORDER BY edad DESC
+   ```
+
+7. **LIMIT**: Limita el número de registros devueltos.
+   ```sql
+   LIMIT 10
+   ```
+
+#### Ejemplo Completo
+
+Ahora que hemos desglosado cada parte, veamos un ejemplo completo de un query SQL:
+
+```sql
+SELECT nombre, edad, ciudad
+FROM usuarios
+WHERE edad > 18
+GROUP BY ciudad
+HAVING COUNT(*) > 1
+ORDER BY edad DESC
+LIMIT 10;
+```
+
+Este query selecciona los nombres, edades y ciudades de los usuarios que tienen más de 18 años, agrupa los resultados por ciudad, filtra los grupos que tienen más de un usuario, ordena los resultados por edad en orden descendente y, finalmente, limita los resultados a 10 registros.
+
+#### Consejo Extra: Comentarios en SQL
+
+Los comentarios son esenciales para mantener tu código SQL organizado y comprensible. Aquí hay cómo puedes agregar comentarios en SQL:
+
+- **Comentario de una sola línea**:
+  ```sql
+  -- Este es un comentario de una sola línea
+  SELECT nombre FROM usuarios;
+  ```
+
+- **Comentario de múltiples líneas**:
+  ```sql
+  /*
+    Este es un comentario
+    de múltiples líneas
+  */
+  SELECT nombre FROM usuarios;
+  ```
+
+### SELECT
+
+Si alguna vez te has preguntado cómo extraer información específica de una base de datos, este blog es para ti. Vamos a desglosar varios ejemplos y veremos cómo el comando `SELECT` puede adaptarse a diferentes necesidades.
+
+
+El comando `SELECT` es la piedra angular del lenguaje SQL. Es el primer paso para interactuar con los datos almacenados en una base de datos relacional. Con `SELECT`, podemos elegir qué columnas queremos ver, aplicar alias para hacer nuestros resultados más legibles, contar registros y mucho más.
+
+#### Ejemplos Prácticos de `SELECT`
+
+Vamos a comenzar con algunos ejemplos básicos y luego avanzaremos a consultas más complejas. Todos estos ejemplos están basados en una tabla llamada `posts` que podría representar publicaciones en un blog o artículos en un sitio web.
+
+##### Ejemplo 1: Seleccionar Todos los Campos
+
+```sql
+SELECT * 
+FROM posts;
+```
+
+Este comando selecciona todas las columnas de la tabla `posts`. Es útil cuando necesitas ver todos los datos sin ninguna restricción.
+
+##### Ejemplo 2: Seleccionar Campos Específicos
+
+```sql
+SELECT titulo, fecha_publicacion, estatus 
+FROM posts;
+```
+
+Aquí, estamos seleccionando sólo las columnas `titulo`, `fecha_publicacion` y `estatus` de la tabla `posts`. Esto es útil cuando sólo necesitas ver ciertos aspectos de los datos.
+
+##### Ejemplo 3: Usar Alias para las Columnas
+
+```sql
+SELECT titulo AS encabezado, fecha_publicacion AS publicado, estatus AS estado 
+FROM posts;
+```
+
+En este ejemplo, estamos usando alias para renombrar las columnas en el resultado. `titulo` se mostrará como `encabezado`, `fecha_publicacion` como `publicado` y `estatus` como `estado`. Los alias ayudan a que los resultados sean más legibles y comprensibles.
+
+##### Ejemplo 4: Contar el Número de Registros
+
+```sql
+SELECT count(*) 
+FROM posts;
+```
+
+Esta consulta cuenta el número total de registros en la tabla `posts`. Es muy útil para obtener un recuento rápido de los elementos en una tabla.
+
+##### Ejemplo 5: Contar Registros con un Alias
+
+```sql
+SELECT count(*) AS numero_posts 
+FROM posts;
+```
+
+Similar al ejemplo anterior, pero aquí estamos usando un alias `numero_posts` para hacer el resultado más claro. El resultado será una sola columna con el nombre `numero_posts` que contiene el número total de publicaciones.
+
+#### Combinando Consultas
+
+Las consultas SQL pueden ser combinadas y encadenadas para realizar tareas más complejas. Por ejemplo, podrías querer contar cuántos posts hay que fueron publicados en un año específico:
+
+```sql
+SELECT COUNT(*) AS posts_2023 
+FROM posts 
+WHERE YEAR(fecha_publicacion) = 2023;
+```
+
+Esta consulta cuenta cuántos registros en la tabla `posts` tienen una `fecha_publicacion` en el año 2023.
+
+#### Consejos para Escribir Consultas `SELECT` Efectivas
+
+1. **Sé Específico**: Selecciona sólo las columnas que necesitas. Esto no solo hace que tu consulta sea más rápida, sino que también mejora la legibilidad.
+2. **Usa Alias**: Los alias pueden hacer que los resultados sean más comprensibles, especialmente si las columnas tienen nombres largos o poco claros.
+3. **Comenta tu Código**: Usa comentarios para explicar partes complejas de tu consulta. Esto es especialmente útil cuando vuelvas a revisar tu código más tarde o cuando otros desarrolladores lo vean.
+
+```sql
+-- Selecciona todos los posts publicados en 2023 y cuenta cuántos hay
+SELECT COUNT(*) AS posts_2023 
+FROM posts 
+WHERE YEAR(fecha_publicacion) = 2023;
+```
+
+
+
+El comando `SELECT` es una herramienta poderosa en SQL que te permite recuperar y manipular datos de manera eficiente. Ya sea que necesites ver todos los datos de una tabla o sólo ciertas columnas, contar registros o renombrar columnas para mayor claridad, `SELECT` te da la flexibilidad para hacerlo. A medida que te familiarices más con SQL, verás cómo este comando se convierte en la base de muchas de tus consultas.
+
+En el mundo de las bases de datos, las operaciones de combinación de tablas son esenciales para realizar consultas complejas y obtener datos significativos. En este blog, exploraremos el uso de la cláusula `FROM` y las distintas operaciones de SQL JOINs, apoyándonos en conceptos de teoría de conjuntos y diagramas de Venn para una mejor comprensión visual y conceptual.
+
+---
+
+### FROM
+
+La cláusula `FROM` es esencial en cualquier consulta SQL, ya que define de qué tabla o tablas se van a recuperar los datos. Aquí tienes un ejemplo sencillo:
+
+```sql
+SELECT *
+FROM posts;
+```
+
+En esta consulta, estamos seleccionando todos los registros de la tabla `posts`.
+
+
+
+### SQL JOINs: Uniendo Tablas
+
+Los SQL JOINs se utilizan para combinar filas de dos o más tablas basadas en una columna relacionada entre ellas. Aquí es donde la teoría de conjuntos nos ayuda a entender mejor las combinaciones posibles entre tablas.
+
+### Teoría de Conjuntos y Diagramas de Venn
+
+En teoría de conjuntos, un conjunto es una colección de elementos. Los diagramas de Venn son representaciones gráficas de conjuntos y sus relaciones entre sí.
+
+![Diagrama de Venn](/SQL/src/join-diferencia.webp)
+![](/SQL/src/join-interseccion.webp)
+*Ejemplo de diagrama de Venn básico*
+
+A continuación, veamos cómo se relacionan los distintos tipos de JOINs con los diagramas de Venn:
+
+
+
+## Introducción a los JOINs
+
+Los JOINs nos permiten combinar filas de dos o más tablas en función de una condición relacionada entre ellas. Existen varios tipos de JOINs en SQL, y cada uno se comporta de manera diferente, parecido a las operaciones en teoría de conjuntos.
+
+### LEFT JOIN
+
+Un `LEFT JOIN` devuelve todos los registros de la tabla de la izquierda (`usuarios`) y los registros coincidentes de la tabla de la derecha (`posts`). Si no hay coincidencias, los resultados de la tabla de la derecha serán `NULL`.
+
+```sql
+SELECT *
+FROM usuarios 
+LEFT JOIN posts ON usuarios.id = posts.usuario_id;
+```
+
+#### Diagrama de Venn:
+
+![LEFT](https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Diagrama_de_Venn_11.svg/640px-Diagrama_de_Venn_11.svg.png)
+
+En el diagrama, el conjunto `A` (usuarios) incluye todos los elementos, mientras que `B` (posts) muestra solo los elementos coincidentes. Los espacios fuera de `B` pero dentro de `A` representan los usuarios sin posts.
+
+Para encontrar registros que no tienen coincidencias en la otra tabla, usamos las cláusulas `WHERE`.
+
+### Usuarios sin Posts
+
+```sql
+SELECT *
+FROM usuarios 
+LEFT JOIN posts ON usuarios.id = posts.usuario_id
+WHERE posts.usuario_id IS NULL;
+```
+![INNER LEFT](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Diagrama_de_Venn_07.svg/640px-Diagrama_de_Venn_07.svg.png)
+
+### RIGHT JOIN
+
+Un `RIGHT JOIN` es similar al `LEFT JOIN`, pero devuelve todos los registros de la tabla de la derecha y los coincidentes de la tabla de la izquierda.
+
+```sql
+SELECT *
+FROM usuarios 
+RIGHT JOIN posts ON usuarios.id = posts.usuario_id;
+```
+
+#### Diagrama de Venn:
+
+![RIGHT](https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Diagrama_de_Venn_12.svg/640px-Diagrama_de_Venn_12.svg.png)
+
+Aquí, `B` (posts) incluye todos los elementos y `A` (usuarios) muestra los coincidentes. Los espacios fuera de `A` pero dentro de `B` representan los posts sin usuarios asociados.
+
+Para encontrar registros que no tienen coincidencias en la otra tabla, usamos las cláusulas `WHERE`.
+
+### Posts sin Usuarios
+
+```sql
+SELECT *
+FROM usuarios 
+RIGHT JOIN posts ON usuarios.id = posts.usuario_id
+WHERE posts.usuario_id IS NULL;
+```
+
+![INNER RIGHT](https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Diagrama_de_Venn_08.svg/640px-Diagrama_de_Venn_08.svg.png)
+
+### INNER JOIN
+
+Un `INNER JOIN` devuelve solo los registros que tienen coincidencias en ambas tablas.
+
+```sql
+SELECT *
+FROM usuarios 
+INNER JOIN posts ON usuarios.id = posts.usuario_id;
+```
+
+#### Diagrama de Venn:
+
+![INNER JOIN](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Diagrama_de_Venn_10.svg/640px-Diagrama_de_Venn_10.svg.png)
+
+El área `X` (intersección) muestra solo los registros coincidentes en ambas tablas `A` (usuarios) y `B` (posts).
+
+### FULL JOIN
+
+Un `FULL JOIN` devuelve todos los registros cuando hay una coincidencia en una de las tablas. Si no hay coincidencias, devuelve `NULL` en el lado de la tabla que no tiene coincidencias.
+
+```sql
+SELECT *
+FROM usuarios 
+LEFT JOIN posts ON usuarios.id = posts.usuario_id
+UNION 
+SELECT *
+FROM usuarios 
+RIGHT JOIN posts ON usuarios.id = posts.usuario_id;
+```
+
+#### Diagrama de Venn:
+
+![FULL JOIN](https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Diagrama_de_Venn_13.svg/640px-Diagrama_de_Venn_13.svg.png)
+
+El diagrama muestra todos los elementos de ambos conjuntos `A` (usuarios) y `B` (posts), con coincidencias e inclusiones totales.
+
+### Diferencia simétrica
+
+```SQL
+SELECT	*
+FROM	usuarios 
+	LEFT JOIN posts on usuarios.id = posts.usuario_id
+WHERE	posts.usuario_id IS NULL
+UNION
+SELECT	*
+FROM	usuarios 
+	RIGHT JOIN posts on usuarios.id = posts.usuario_id
+WHERE	posts.usuario_id IS NULL;
+```
+![JOIN DIFERENCIA](https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Diagrama_de_Venn_09.svg/640px-Diagrama_de_Venn_09.svg.png)
+
+En resumen, los JOINs en SQL nos permiten manipular y analizar datos distribuidos en múltiples tablas. Al comprender la teoría de conjuntos y visualizar estos conceptos con diagramas de Venn, podemos profundizar en cómo funcionan estas combinaciones y aplicar estas técnicas de manera efectiva en nuestras bases de datos.
+
+![MEME](/SQL/src/meme-joins.jpg)
