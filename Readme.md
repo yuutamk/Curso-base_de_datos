@@ -1050,3 +1050,102 @@ WHERE	posts.usuario_id IS NULL;
 En resumen, los JOINs en SQL nos permiten manipular y analizar datos distribuidos en múltiples tablas. Al comprender la teoría de conjuntos y visualizar estos conceptos con diagramas de Venn, podemos profundizar en cómo funcionan estas combinaciones y aplicar estas técnicas de manera efectiva en nuestras bases de datos.
 
 ![MEME](/SQL/src/meme-joins.jpg)
+
+### WHERE
+
+La cláusula `WHERE` se utiliza en SQL para filtrar registros en una consulta basándose en una condición específica. Al usar `WHERE`, puedes seleccionar sólo aquellos registros que cumplen ciertos criterios, lo que te permite trabajar de manera más eficiente y efectiva con tus datos.
+
+#### Ejemplos Prácticos de `WHERE`
+
+Vamos a explorar varios ejemplos usando una tabla llamada `posts`, que podría contener información sobre publicaciones en un blog o artículos en un sitio web.
+
+##### Ejemplo 1: Filtrar por ID
+
+```sql
+SELECT *
+FROM posts
+WHERE id < 50;
+```
+
+En este ejemplo, estamos seleccionando todas las columnas de la tabla `posts` donde el `id` es menor que 50. Esto es útil cuando quieres ver sólo los primeros registros de tu tabla.
+
+##### Ejemplo 2: Filtrar por Estatus
+
+```sql
+SELECT *
+FROM posts
+WHERE estatus = 'Inactivo';
+```
+
+Aquí, estamos seleccionando todas las publicaciones donde el estatus es 'Inactivo'. Esto te permite enfocarte en las publicaciones que no están activas en tu sitio.
+
+##### Ejemplo 3: Filtrar por Palabra Clave en el Título
+
+```sql
+SELECT *
+FROM posts
+WHERE titulo LIKE '%escandalo%';
+```
+
+Esta consulta selecciona todas las publicaciones cuyo título contiene la palabra 'escandalo'. El operador `LIKE` y los comodines `%` te permiten buscar patrones dentro de los textos.
+
+##### Ejemplo 4: Filtrar por Fecha de Publicación
+
+```sql
+SELECT *
+FROM posts
+WHERE fecha_publicacion > '2025-01-01';
+```
+
+En este caso, estamos seleccionando todas las publicaciones cuya fecha de publicación es posterior al 1 de enero de 2025. Esto es útil para obtener posts recientes o futuros.
+
+##### Ejemplo 5: Filtrar por Rango de Fechas
+
+```sql
+SELECT *
+FROM posts
+WHERE fecha_publicacion BETWEEN '2023-01-01' AND '2025-12-31';
+```
+
+Esta consulta selecciona todas las publicaciones cuyas fechas de publicación están entre el 1 de enero de 2023 y el 31 de diciembre de 2025. El operador `BETWEEN` facilita la selección de un rango de valores.
+
+##### Ejemplo 6: Filtrar por Año de Publicación
+
+```sql
+SELECT *
+FROM posts
+WHERE YEAR(fecha_publicacion) BETWEEN '2023' AND '2024';
+```
+
+Aquí, estamos seleccionando todas las publicaciones cuyos años de publicación están entre 2023 y 2024. La función `YEAR` extrae el año de la fecha de publicación.
+
+##### Ejemplo 7: Filtrar por Mes de Publicación
+
+```sql
+SELECT *
+FROM posts
+WHERE MONTH(fecha_publicacion) = '04';
+```
+
+En esta consulta, estamos seleccionando todas las publicaciones que fueron publicadas en el mes de abril, independientemente del año. La función `MONTH` extrae el mes de la fecha de publicación.
+
+##### Ejemplo 8: Filtrar Registros No Nulos
+
+```sql
+SELECT *
+FROM posts
+WHERE usuario_id IS NOT NULL;
+```
+
+Esta consulta selecciona todas las publicaciones donde `usuario_id` no es nulo. Esto te permite enfocarte en los posts que tienen un usuario asociado.
+
+##### Ejemplo 9: Filtrar Registros Nulos
+
+```sql
+SELECT *
+FROM posts
+WHERE usuario_id IS NULL;
+```
+
+Por último, esta consulta selecciona todas las publicaciones donde `usuario_id` es nulo. Esto es útil para identificar posts que no tienen un usuario asociado.
+
