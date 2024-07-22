@@ -25,3 +25,5 @@ phpMyAdmin en Laragon                  ----> https://www.youtube.com/watch?v=whX
 Servicio administrado de base de datos ----> https://www.000webhost.com/
 
 MySQL What is DDL, DML, DCL, and TCL?  ----> https://www.w3schools.in/mysql/ddl-dml-dcl/ 
+
+Generador de datos                     ----> https://generatedata.com/ 
