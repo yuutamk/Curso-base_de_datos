@@ -1,29 +1,48 @@
-Crear diagramas ----> https://online.visual-paradigm.com/app/diagrams/#diagram:proj=0&type=ERDiagram
-                      https://app.diagrams.net/  
-                      https://dbdiagram.io/home
-                      https://www.lucidchart.com/pages/
-                      https://www.quickdatabasediagrams.com/
-                      https://erdplus.com/
-                      https://nulab.com/es/cacoo/examples/database-diagrams-er-diagram-tool/
-                      https://drawsql.app/
-                      https://miro.com/es/
-                      https://www.gliffy.com/solutions/diagrams-for-software-engineering
-                      https://creately.com/
-                      https://drawsql.app/
+#!/bin/sh
+#
+# An example hook script to verify what is about to be committed.
+# Called by "git commit" with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message if
+# it wants to stop the commit.
+#
+# To enable this hook, rename this file to "pre-commit".
 
-SQL SGDB        ----> https://dev.mysql.com/downloads/file/?id=494866
+if git rev-parse --verify HEAD >/dev/null 2>&1
+then
+	against=HEAD
+else
+	# Initial commit: diff against an empty tree object
+	against=$(git hash-object -t tree /dev/null)
+fi
 
-SGDB online     ----> https://sqliteonline.com/
+# If you want to allow non-ASCII filenames set this variable to true.
+allownonascii=$(git config --type=bool hooks.allownonascii)
 
-Guia de instalacion SQL Server Windows ----> https://learn.microsoft.com/es-es/sql/database-engine/install-windows/install-sql-server?view=sql-server-ver16
-                                             https://www.youtube.com/watch?v=MnvxXo1DRzg
+# Redirect output to stderr.
+exec 1>&2
 
-Guia de instalacion de Laragon         ----> https://www.youtube.com/watch?v=KyKic5jTZkQ&t=824s
-phpMyAdmin en Laragon                  ----> https://www.youtube.com/watch?v=whXdCZ9j0cM
-  
+# Cross platform projects tend to avoid non-ASCII filenames; prevent
+# them from being added to the repository. We exploit the fact that the
+# printable range starts at the space character and ends with tilde.
+if [ "$allownonascii" != "true" ] &&
+	# Note that the use of brackets around a tr range is ok here, (it's
+	# even required, for portability to Solaris 10's /usr/bin/tr), since
+	# the square bracket bytes happen to fall in the designated range.
+	test $(git diff --cached --name-only --diff-filter=A -z $against |
+	  LC_ALL=C tr -d '[ -~]\0' | wc -c) != 0
+then
+	cat <<\EOF
+Error: Attempt to add a non-ASCII file name.
 
-Servicio administrado de base de datos ----> https://www.000webhost.com/
+This can cause problems if you want to work with people on other platforms.
 
-MySQL What is DDL, DML, DCL, and TCL?  ----> https://www.w3schools.in/mysql/ddl-dml-dcl/ 
+To be portable it is advisable to rename the file.
 
-Generador de datos                     ----> https://generatedata.com/ 
+If you know what you are doing you can disable this check using:
+
+  git config hooks.allownonascii true
+EOF
+	exit 1
+fi
+
+# If there are 

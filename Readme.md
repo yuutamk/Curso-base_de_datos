@@ -1149,3 +1149,431 @@ WHERE usuario_id IS NULL;
 
 Por último, esta consulta selecciona todas las publicaciones donde `usuario_id` es nulo. Esto es útil para identificar posts que no tienen un usuario asociado.
 
+
+
+## GROUP BY
+
+La cláusula `GROUP BY` se utiliza en SQL para agrupar filas que tienen valores iguales en una o más columnas. Esto te permite realizar cálculos agregados como `COUNT`, `SUM`, `AVG`, `MAX`, y `MIN` en grupos de datos, proporcionando un resumen conciso de tu información.
+
+#### Ejemplos Prácticos de `GROUP BY`
+
+Vamos a trabajar con una tabla llamada `posts`, que podría contener información sobre publicaciones en un blog o artículos en un sitio web.
+
+##### Ejemplo 1: Agrupar por Estatus
+
+```sql
+SELECT estatus, COUNT(*) AS post_number
+FROM posts
+GROUP BY estatus;
+```
+
+En este ejemplo, estamos seleccionando el estatus de las publicaciones y contando cuántas publicaciones hay para cada estatus. Esto te permite ver cuántas publicaciones están activas, inactivas, etc.
+
+##### Ejemplo 2: Agrupar por Año de Publicación
+
+```sql
+SELECT YEAR(fecha_publicacion) AS post_year, COUNT(*) AS post_number
+FROM posts
+GROUP BY post_year;
+```
+
+Aquí, estamos agrupando las publicaciones por el año de publicación y contando cuántas publicaciones hay en cada año. Esto es útil para obtener un resumen anual de tus publicaciones.
+
+##### Ejemplo 3: Agrupar por Mes de Publicación
+
+```sql
+SELECT MONTHNAME(fecha_publicacion) AS post_month, COUNT(*) AS post_number
+FROM posts
+GROUP BY post_month;
+```
+
+En esta consulta, estamos agrupando las publicaciones por el nombre del mes de publicación y contando cuántas publicaciones hay en cada mes. Esto te proporciona un resumen mensual de tus publicaciones.
+
+##### Ejemplo 4: Agrupar por Estatus y Mes de Publicación
+
+```sql
+SELECT estatus, MONTHNAME(fecha_publicacion) AS post_date, COUNT(*) AS post_number
+FROM posts
+GROUP BY estatus, post_date;
+```
+
+Esta consulta agrupa las publicaciones por estatus y por el nombre del mes de publicación, contando cuántas publicaciones hay para cada combinación de estatus y mes. Esto te permite ver la distribución de publicaciones activas e inactivas a lo largo de los meses.
+
+#### Ventajas de Usar `GROUP BY`
+
+- **Resúmenes de Datos**: `GROUP BY` te permite crear resúmenes de datos, lo que es esencial para el análisis y la generación de informes.
+- **Cálculos Agregados**: Puedes realizar cálculos agregados como `COUNT`, `SUM`, `AVG`, etc., en tus datos agrupados.
+- **Organización**: Agrupar datos te ayuda a organizar y entender mejor tus datos, proporcionando una visión más clara de las tendencias y patrones.
+
+#### Consideraciones al Usar `GROUP BY`
+
+- **Orden de las Columnas**: El orden de las columnas en `GROUP BY` es importante y afecta cómo se agrupan los datos.
+- **Funciones Agregadas**: Asegúrate de usar funciones agregadas adecuadas al seleccionar columnas que no están incluidas en `GROUP BY`.
+- **Rendimiento**: Agrupar grandes conjuntos de datos puede ser intensivo en recursos, así que optimiza tus consultas y bases de datos para un rendimiento eficiente.
+
+
+
+## ORDER BY
+
+La cláusula `ORDER BY` se utiliza para ordenar los resultados de una consulta SQL en orden ascendente (ASC) o descendente (DESC) basado en una o más columnas.
+
+### Ejemplos de `ORDER BY`
+
+#### Ordenar por Fecha de Publicación Ascendente
+
+```sql
+SELECT *
+FROM posts
+ORDER BY fecha_publicacion ASC;
+```
+
+Esta consulta ordena todas las publicaciones por la fecha de publicación en orden ascendente (de la más antigua a la más reciente).
+
+#### Ordenar por Fecha de Publicación Descendente
+
+```sql
+SELECT *
+FROM posts
+ORDER BY fecha_publicacion DESC;
+```
+
+Aquí, las publicaciones se ordenan por fecha de publicación en orden descendente (de la más reciente a la más antigua).
+
+#### Ordenar por Título Ascendente
+
+```sql
+SELECT *
+FROM posts
+ORDER BY titulo ASC;
+```
+
+En este caso, las publicaciones se ordenan alfabéticamente por título en orden ascendente.
+
+#### Ordenar por Título Descendente
+
+```sql
+SELECT *
+FROM posts
+ORDER BY titulo DESC;
+```
+
+Esta consulta ordena las publicaciones alfabéticamente por título en orden descendente.
+
+#### Ordenar por Usuario ID y Limitar Resultados
+
+```sql
+SELECT *
+FROM posts
+ORDER BY usuario_id ASC
+LIMIT 5;
+```
+
+Esta consulta ordena las publicaciones por el ID de usuario en orden ascendente y muestra solo las primeras 5 publicaciones.
+
+#### Ordenar por Mes de Publicación y Agrupar por Estatus
+
+```sql
+SELECT MONTHNAME(fecha_publicacion) AS post_month, estatus, COUNT(*) AS post_quantity
+FROM posts
+GROUP BY estatus, post_month
+ORDER BY post_month;
+```
+
+Esta consulta agrupa las publicaciones por estatus y mes de publicación, luego las ordena por el mes de publicación.
+
+## Filtrando Grupos con `HAVING`
+
+La cláusula `HAVING` se utiliza para filtrar grupos de resultados creados por la cláusula `GROUP BY`. A diferencia de `WHERE`, que filtra filas antes de la agrupación, `HAVING` filtra grupos después de la agrupación.
+
+### Ejemplos de `HAVING`
+
+#### Filtrar Publicaciones con Cantidad Mayor a 1 (Uso Incorrecto)
+
+```sql
+SELECT MONTHNAME(fecha_publicacion) AS post_month, estatus, COUNT(*) AS post_quantity
+FROM posts
+WHERE post_quantity > 1
+GROUP BY estatus, post_month
+ORDER BY post_month;
+```
+
+Esta consulta arrojará un error porque `post_quantity` no se define hasta que los datos se agrupan. La cláusula `WHERE` no puede usar el resultado de una función agregada.
+
+#### Filtrar Publicaciones con Cantidad Mayor a 1 (Uso Correcto)
+
+```sql
+SELECT MONTHNAME(fecha_publicacion) AS post_month, estatus, COUNT(*) AS post_quantity
+FROM posts
+GROUP BY estatus, post_month
+HAVING post_quantity > 1
+ORDER BY post_month;
+```
+
+Esta consulta agrupa las publicaciones por estatus y mes de publicación, y luego filtra los grupos que tienen más de una publicación. Finalmente, ordena los resultados por mes de publicación.
+
+## Ventajas de Usar `ORDER BY` y `HAVING`
+
+- **Precisión**: Ordenar y filtrar datos te permite obtener resultados más precisos y relevantes.
+- **Organización**: Mejora la legibilidad y comprensión de los resultados de tus consultas.
+- **Flexibilidad**: Combinar `ORDER BY` con `HAVING` y otras cláusulas SQL te proporciona una gran flexibilidad para realizar análisis complejos.
+
+# Consultas Anidadas en SQL
+
+Hoy vamos a explorar un tema fascinante y un poco más avanzado: las consultas anidadas, también conocidas como subconsultas. Estas poderosas herramientas nos permiten realizar consultas dentro de otras consultas, permitiéndonos extraer y analizar datos de maneras más complejas y detalladas. Es como adentrarse en el interminable agujero de conejo de Alicia en el País de las Maravillas, donde cada capa nos revela algo nuevo y emocionante.
+
+## ¿Qué son las Consultas Anidadas?
+
+Las consultas anidadas son consultas SQL que se encuentran dentro de otra consulta. Pueden estar en la cláusula `SELECT`, `FROM`, `WHERE`, `HAVING`, o incluso `ORDER BY`. Se utilizan para devolver un conjunto de resultados que luego se utilizan por la consulta externa. Las subconsultas pueden ser de dos tipos: subconsultas de una sola fila, que devuelven un único valor, y subconsultas de varias filas, que pueden devolver múltiples filas y columnas.
+
+### Ejemplo 1: Subconsulta en la Cláusula `FROM`
+
+Veamos un ejemplo donde utilizamos una subconsulta en la cláusula `FROM`. Esta subconsulta calcula la fecha mínima de publicación por año, y luego la consulta externa cuenta las publicaciones para cada una de esas fechas.
+
+```sql
+SELECT new_table_projection.date, COUNT(*) AS posts_count
+FROM (
+    SELECT DATE(MIN(fecha_publicacion)) AS date, YEAR(fecha_publicacion) AS post_year
+    FROM posts
+    GROUP BY post_year
+) AS new_table_projection
+GROUP BY new_table_projection.date 
+ORDER BY new_table_projection.date;
+```
+
+### Desglose del Ejemplo
+
+1. **Subconsulta en `FROM`**:
+    ```sql
+    SELECT DATE(MIN(fecha_publicacion)) AS date, YEAR(fecha_publicacion) AS post_year
+    FROM posts
+    GROUP BY post_year
+    ```
+    Esta subconsulta selecciona la fecha mínima de publicación (`MIN(fecha_publicacion)`) y el año de la fecha de publicación (`YEAR(fecha_publicacion)`) para cada año.
+
+2. **Consulta Externa**:
+    ```sql
+    SELECT new_table_projection.date, COUNT(*) AS posts_count
+    FROM (...)
+    GROUP BY new_table_projection.date 
+    ORDER BY new_table_projection.date;
+    ```
+    La consulta externa utiliza los resultados de la subconsulta y cuenta el número de publicaciones (`COUNT(*)`) para cada fecha mínima de publicación.
+
+### Ejemplo 2: Subconsulta en la Cláusula `WHERE`
+
+En este ejemplo, utilizamos una subconsulta en la cláusula `WHERE` para encontrar la publicación más reciente.
+
+```sql
+SELECT *
+FROM posts
+WHERE fecha_publicacion = (
+    SELECT MAX(fecha_publicacion)
+    FROM posts
+);
+```
+
+### Desglose del Ejemplo
+
+1. **Subconsulta en `WHERE`**:
+    ```sql
+    SELECT MAX(fecha_publicacion)
+    FROM posts
+    ```
+    Esta subconsulta selecciona la fecha de publicación más reciente (`MAX(fecha_publicacion)`).
+
+2. **Consulta Externa**:
+    ```sql
+    SELECT *
+    FROM posts
+    WHERE fecha_publicacion = (...);
+    ```
+    La consulta externa selecciona todas las publicaciones donde la fecha de publicación es igual a la fecha más reciente devuelta por la subconsulta.
+
+### Ejemplo 3: Subconsulta Simple
+
+A veces, una simple subconsulta puede proporcionar información útil de forma directa. Aquí hay un ejemplo simple que selecciona la fecha de publicación más reciente.
+
+```sql
+SELECT MAX(fecha_publicacion)
+FROM posts;
+```
+
+## Ventajas de las Consultas Anidadas
+
+- **Flexibilidad**: Permiten realizar análisis complejos y detallados que serían difíciles de lograr con consultas simples.
+- **Modularidad**: Facilitan la creación de consultas reutilizables y modulares.
+- **Precisión**: Ayudan a extraer datos específicos y precisos al combinar múltiples niveles de filtrado y agregación.
+
+# Convertir Preguntas en Consultas SQL: Guía Creativa
+
+vamos a sumergirnos en el fascinante proceso de convertir preguntas cotidianas en consultas SQL eficaces. A menudo, trabajar con bases de datos implica formular preguntas específicas y luego traducirlas a un lenguaje que la base de datos pueda entender: SQL. Vamos a explorar cómo hacer esto paso a paso utilizando ejemplos prácticos.
+
+## Pasos Básicos para Convertir una Pregunta en una Consulta SQL
+
+Antes de comenzar con los ejemplos, es importante entender los componentes básicos de una consulta SQL y cómo se alinean con las preguntas que queremos hacer:
+
+1. **SELECT**: Lo que quieres mostrar.
+2. **FROM**: De dónde vas a tomar los datos.
+3. **WHERE**: Los filtros de los datos que quieres mostrar.
+4. **GROUP BY**: Los rubros por los que te interesa agrupar la información.
+5. **ORDER BY**: El orden en que quieres presentar la información.
+6. **HAVING**: Los filtros que quieres que tus datos agrupados tengan.
+
+### Ejemplo 1: ¿Cuántos tags tienen cada post?
+
+Pregunta: "¿Cuántos tags tienen cada post?"
+
+```sql
+SELECT  posts.titulo, COUNT(*) AS num_etiquetas
+FROM    posts
+    INNER JOIN posts_etiquetas ON posts.id = posts_etiquetas.post_id
+    INNER JOIN etiquetas ON etiquetas.id = posts_etiquetas.etiqueta_id
+GROUP BY posts.id;
+```
+
+- **SELECT**: Queremos mostrar el título del post (`posts.titulo`) y el número de etiquetas (`COUNT(*)`).
+- **FROM**: Los datos provienen de las tablas `posts`, `posts_etiquetas` y `etiquetas`.
+- **INNER JOIN**: Necesitamos combinar estas tablas para obtener la relación entre posts y etiquetas.
+- **GROUP BY**: Agrupamos por el ID del post (`posts.id`).
+
+### Ejemplo 2: ¿Cuál es el tag que más se repite?
+
+Pregunta: "¿Cuál es el tag que más se repite?"
+
+```sql
+SELECT  etiquetas.nombre_etiqueta, COUNT(*) AS ocurrencias
+FROM etiquetas
+    INNER JOIN posts_etiquetas ON etiquetas.id = posts_etiquetas.etiqueta_id
+GROUP BY etiquetas.id
+ORDER BY ocurrencias DESC;
+```
+
+- **SELECT**: Mostramos el nombre de la etiqueta (`etiquetas.nombre_etiqueta`) y su número de ocurrencias (`COUNT(*)`).
+- **FROM**: Los datos provienen de `etiquetas` y `posts_etiquetas`.
+- **INNER JOIN**: Combinamos las tablas `etiquetas` y `posts_etiquetas`.
+- **GROUP BY**: Agrupamos por el ID de la etiqueta (`etiquetas.id`).
+- **ORDER BY**: Ordenamos los resultados por el número de ocurrencias en orden descendente (`ocurrencias DESC`).
+
+### Ejemplo 3: Los tags que tiene un post separados por comas
+
+Pregunta: "¿Cuáles son los tags que tiene cada post, separados por comas?"
+
+```sql
+SELECT  posts.titulo, GROUP_CONCAT(nombre_etiqueta)
+FROM    posts
+    INNER JOIN posts_etiquetas ON posts.id = posts_etiquetas.post_id
+    INNER JOIN etiquetas ON etiquetas.id = posts_etiquetas.etiqueta_id
+GROUP BY posts.id;
+```
+
+- **SELECT**: Mostramos el título del post (`posts.titulo`) y concatenamos los nombres de las etiquetas (`GROUP_CONCAT(nombre_etiqueta)`).
+- **FROM**: Los datos provienen de las tablas `posts`, `posts_etiquetas` y `etiquetas`.
+- **INNER JOIN**: Necesitamos combinar estas tablas para obtener la relación entre posts y etiquetas.
+- **GROUP BY**: Agrupamos por el ID del post (`posts.id`).
+
+### Ejemplo 4: ¿Qué etiqueta no tiene ningún post asociado?
+
+Pregunta: "¿Qué etiqueta no tiene ningún post asociado?"
+
+```sql
+SELECT *
+FROM etiquetas 
+LEFT JOIN posts_etiquetas ON etiquetas.id = posts_etiquetas.etiqueta_id
+WHERE posts_etiquetas.etiqueta_id IS NULL;
+```
+
+- **SELECT**: Mostramos todas las columnas de la tabla `etiquetas`.
+- **FROM**: Los datos provienen de las tablas `etiquetas` y `posts_etiquetas`.
+- **LEFT JOIN**: Usamos un `LEFT JOIN` para asegurarnos de incluir todas las etiquetas, incluso aquellas sin posts asociados.
+- **WHERE**: Filtramos las etiquetas donde `posts_etiquetas.etiqueta_id` es `NULL`, es decir, etiquetas sin posts.
+
+### Ejemplo 5: Las categorías ordenadas por número de posts
+
+Pregunta: "¿Cuáles son las categorías ordenadas por número de posts?"
+
+```sql
+SELECT c.nombre_categoria, COUNT(*) AS cant_posts
+FROM    categorias AS c
+    INNER JOIN posts AS p ON c.id = p.categoria_id
+GROUP BY c.id
+ORDER BY cant_posts DESC;
+```
+
+- **SELECT**: Mostramos el nombre de la categoría (`c.nombre_categoria`) y el número de posts (`COUNT(*)`).
+- **FROM**: Los datos provienen de las tablas `categorias` y `posts`.
+- **INNER JOIN**: Combinamos las tablas `categorias` y `posts`.
+- **GROUP BY**: Agrupamos por el ID de la categoría (`c.id`).
+- **ORDER BY**: Ordenamos los resultados por el número de posts en orden descendente (`cant_posts DESC`).
+
+### Ejemplo 6: ¿Cuál es la categoría que tiene más posts?
+
+Pregunta: "¿Cuál es la categoría que tiene más posts?"
+
+```sql
+SELECT c.nombre_categoria, COUNT(*) AS cant_posts
+FROM    categorias AS c
+    INNER JOIN posts AS p ON c.id = p.categoria_id
+GROUP BY c.id
+ORDER BY cant_posts DESC
+LIMIT 1;
+```
+
+- **SELECT**: Mostramos el nombre de la categoría (`c.nombre_categoria`) y el número de posts (`COUNT(*)`).
+- **FROM**: Los datos provienen de las tablas `categorias` y `posts`.
+- **INNER JOIN**: Combinamos las tablas `categorias` y `posts`.
+- **GROUP BY**: Agrupamos por el ID de la categoría (`c.id`).
+- **ORDER BY**: Ordenamos los resultados por el número de posts en orden descendente (`cant_posts DESC`).
+- **LIMIT**: Limitamos el resultado a una fila (`LIMIT 1`).
+
+### Ejemplo 7: ¿Qué usuario ha contribuido con más posts?
+
+Pregunta: "¿Qué usuario ha contribuido con más posts?"
+
+```sql
+SELECT u.nickname, COUNT(*) AS cant_posts
+FROM    usuarios AS u
+    INNER JOIN posts AS p ON u.id = p.usuario_id
+GROUP BY u.id
+ORDER BY cant_posts DESC
+LIMIT 1;
+```
+
+- **SELECT**: Mostramos el apodo del usuario (`u.nickname`) y el número de posts (`COUNT(*)`).
+- **FROM**: Los datos provienen de las tablas `usuarios` y `posts`.
+- **INNER JOIN**: Combinamos las tablas `usuarios` y `posts`.
+- **GROUP BY**: Agrupamos por el ID del usuario (`u.id`).
+- **ORDER BY**: Ordenamos los resultados por el número de posts en orden descendente (`cant_posts DESC`).
+- **LIMIT**: Limitamos el resultado a una fila (`LIMIT 1`).
+
+### Ejemplo 8: ¿De qué categorías escribe cada usuario?
+
+Pregunta: "¿De qué categorías escribe cada usuario?"
+
+```sql
+SELECT u.nickname, COUNT(*) AS cant_posts,  GROUP_CONCAT(nombre_categoria)
+FROM    usuarios AS u
+    INNER JOIN posts AS p ON u.id = p.usuario_id
+    INNER JOIN categorias AS c ON c.id = p.categoria_id
+GROUP BY u.id;
+```
+
+- **SELECT**: Mostramos el apodo del usuario (`u.nickname`), el número de posts (`COUNT(*)`) y las categorías (`GROUP_CONCAT(nombre_categoria)`).
+- **FROM**: Los datos provienen de las tablas `usuarios`, `posts` y `categorias`.
+- **INNER JOIN**: Combinamos las tablas `usuarios`, `posts` y `categorias`.
+- **GROUP BY**: Agrupamos por el ID del usuario (`u.id`).
+
+### Ejemplo 9: ¿Qué usuario no tiene ningún post asociado?
+
+Pregunta: "¿Qué usuario no tiene ningún post asociado?"
+
+```sql
+SELECT *
+FROM usuarios 
+LEFT JOIN posts ON usuarios.id = posts.usuario_id
+WHERE posts.usuario_id IS NULL;
+```
+
+- **SELECT**: Mostramos todas las columnas de la tabla `usuarios`.
+- **FROM**: Los datos provienen de las tablas `usuarios` y `posts`.
+- **LEFT JOIN**: Usamos un `LEFT JOIN` para asegurarnos de incluir todos los usuarios, incluso aquellos sin posts asociados.
+- **WHERE**: Filtramos los usuarios donde `posts.usuario_id` es `NULL`, es decir, usuarios sin posts.
