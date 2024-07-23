@@ -1577,3 +1577,86 @@ WHERE posts.usuario_id IS NULL;
 - **FROM**: Los datos provienen de las tablas `usuarios` y `posts`.
 - **LEFT JOIN**: Usamos un `LEFT JOIN` para asegurarnos de incluir todos los usuarios, incluso aquellos sin posts asociados.
 - **WHERE**: Filtramos los usuarios donde `posts.usuario_id` es `NULL`, es decir, usuarios sin posts.
+
+
+# Triggers
+Los triggers son herramientas poderosas que permiten automatizar tareas en nuestras bases de datos, mejorando la eficiencia y la seguridad. Vamos a explorar qué son, para qué sirven, cuándo se pueden usar y veremos algunos ejemplos prácticos.
+
+
+Un trigger, o disparador, es un script en lenguaje SQL que se asocia a una tabla específica. Este script se ejecuta automáticamente cuando se realizan ciertas operaciones en la tabla, como añadir, actualizar o eliminar registros. Los triggers se han usado en MySQL desde la versión 5.0.2 y en PostgreSQL desde 1997.
+
+### ¿Para Qué Sirve un Trigger?
+La función principal de los triggers es mejorar la gestión de la base de datos. Algunas de las ventajas clave incluyen:
+
+- Automatización: Realizan operaciones de forma automática, sin intervención humana, ahorrando tiempo.
+- Seguridad e Integridad: Aumentan la seguridad e integridad de la información al programar restricciones y verificaciones que minimizan errores y sincronizan la información.
+### ¿Cuándo Se Puede Usar un Trigger?
+Los triggers se ejecutan en respuesta a las acciones INSERT, UPDATE o DELETE en una tabla. Para usar un trigger, el usuario debe tener permisos de INSERT y DELETE en la base de datos correspondiente.
+
+### Tipos de Triggers
+Existen diferentes tipos de triggers según el momento en que se ejecutan:
+
+- BEFORE INSERT: Se ejecuta antes de que se inserte un nuevo registro.
+- AFTER INSERT: Se ejecuta después de que se inserte un nuevo registro.
+- BEFORE UPDATE: Se ejecuta antes de que se actualice un registro.
+- AFTER UPDATE: Se ejecuta después de que se actualice un registro.
+- BEFORE DELETE: Se ejecuta antes de que se elimine un registro.
+- AFTER DELETE: Se ejecuta después de que se elimine un registro.
+Ejemplos Prácticos
+Vamos a ver algunos ejemplos para entender mejor cómo funcionan los triggers.
+
+### Ejemplo 1: Trigger para Registrar Inserciones
+Supongamos que tenemos una tabla empleados y queremos registrar cada inserción en una tabla auditoria.
+
+```sql
+Copiar código
+CREATE TRIGGER after_employee_insert
+AFTER INSERT ON empleados
+FOR EACH ROW
+BEGIN
+    INSERT INTO auditoria (empleado_id, accion, fecha)
+    VALUES (NEW.id, 'INSERT', NOW());
+END;
+```
+- `AFTER INSERT`: Este trigger se ejecuta después de que se inserte un nuevo registro en empleados.
+- `FOR EACH ROW`: Se aplica a cada fila que se inserte.
+- `NEW.id`: Se refiere al ID del nuevo empleado insertado.
+accion y fecha: Registramos la acción 'INSERT' y la fecha actual.
+### Ejemplo 2: Trigger para Validar Actualizaciones
+Queremos asegurarnos de que los sueldos en la tabla empleados no se actualicen a valores negativos.
+
+```sql
+Copiar código
+CREATE TRIGGER before_salary_update
+BEFORE UPDATE ON empleados
+FOR EACH ROW
+BEGIN
+    IF NEW.sueldo < 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'El sueldo no puede ser negativo';
+    END IF;
+END;
+```
+- `BEFORE UPDATE`: Se ejecuta antes de que se actualice un registro en empleados.
+- `IF NEW.sueldo < 0`: Comprobamos si el nuevo sueldo es negativo.
+- `SIGNAL SQLSTATE '45000'`: Generamos un error si la condición se cumple.
+### Ejemplo 3: Trigger para Sincronizar Eliminaciones
+Queremos eliminar registros asociados en otra tabla cuando se elimina un empleado.
+
+```sql
+Copiar código
+CREATE TRIGGER after_employee_delete
+AFTER DELETE ON empleados
+FOR EACH ROW
+BEGIN
+    DELETE FROM proyectos WHERE empleado_id = OLD.id;
+END;
+```
+
+- `AFTER DELETE`: Se ejecuta después de que se elimine un registro en empleados.
+- `OLD.id`: Se refiere al ID del empleado eliminado.
+- `DELETE FROM proyectos`: Eliminamos los registros en proyectos donde el empleado_id coincida.
+
+
+
+Los triggers son herramientas poderosas y versátiles que pueden automatizar tareas importantes, mejorar la seguridad y garantizar la integridad de los datos en nuestras bases de
