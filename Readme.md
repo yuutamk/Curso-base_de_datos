@@ -1051,7 +1051,7 @@ En resumen, los JOINs en SQL nos permiten manipular y analizar datos distribuido
 
 ![MEME](/SQL/src/meme-joins.jpg)
 
-![JOIN](/SQL/src/JOINS.webp)
+![JOIN](/src/JOINS.webp)
 
 ### WHERE
 
