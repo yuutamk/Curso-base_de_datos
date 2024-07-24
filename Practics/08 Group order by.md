@@ -109,18 +109,32 @@ Resultado esperado:
 
 ```sql
 SELECT 
-    t.name AS teacher, 
-    SUM(c.n_reviews) AS total_reviews
+    teachers.name AS teacher, 
+    SUM(courses.n_reviews) AS total_reviews
 FROM 
-    courses c
+    courses courses
 JOIN 
-    teachers t ON c.teacher_id = t.id
+    teachers teachers ON courses.teacher_id = teachers.id
 WHERE 
-    c.n_reviews > 0
+    courses.n_reviews > 0
 GROUP BY 
-    t.name
+    teachers.name
 ORDER BY 
     total_reviews DESC;
+```
+O usando LEFT JOIN para unir las taablas y agruparlas
+
+```sql
+SELECT
+  teachers.name AS teacher,
+  SUM(courses.n_reviews) AS total_reviews
+FROM courses
+LEFT JOIN
+  teachers ON courses.teacher_id = teachers.id
+WHERE
+  courses.teacher_id IS NOT NULL
+GROUP BY teachers.name
+ORDER BY total_reviews DESC;
 ```
 
   </details>

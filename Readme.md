@@ -1051,6 +1051,8 @@ En resumen, los JOINs en SQL nos permiten manipular y analizar datos distribuido
 
 ![MEME](/SQL/src/meme-joins.jpg)
 
+![JOIN](/SQL/src/JOINS.webp)
+
 ### WHERE
 
 La cláusula `WHERE` se utiliza en SQL para filtrar registros en una consulta basándose en una condición específica. Al usar `WHERE`, puedes seleccionar sólo aquellos registros que cumplen ciertos criterios, lo que te permite trabajar de manera más eficiente y efectiva con tus datos.
@@ -1579,6 +1581,129 @@ WHERE posts.usuario_id IS NULL;
 - **WHERE**: Filtramos los usuarios donde `posts.usuario_id` es `NULL`, es decir, usuarios sin posts.
 
 
+# CASE
+
+
+La instrucción `CASE` en SQL es una estructura de control condicional que te permite ejecutar diferentes expresiones o devolver diferentes valores basados en condiciones específicas. Es similar a las estructuras `if-else` en otros lenguajes de programación.
+
+### Sintaxis Básica
+
+La sintaxis básica de `CASE WHEN` es la siguiente:
+
+```sql
+CASE
+    WHEN condición1 THEN resultado1
+    WHEN condición2 THEN resultado2
+    ...
+    ELSE resultado_final
+END
+```
+
+### ¿Dónde se Puede Usar?
+
+El `CASE` puede ser utilizado en diversas partes de una consulta SQL, tales como:
+
+- En la cláusula `SELECT` para modificar los valores que se devuelven.
+- En la cláusula `WHERE` para aplicar condiciones complejas.
+- En la cláusula `ORDER BY` para ordenar los resultados de manera personalizada.
+
+## Ejemplos Prácticos
+
+### 1. Clasificar Valores en una Consulta SELECT
+
+Supongamos que tenemos una tabla llamada `estudiantes` con una columna `calificacion`. Queremos clasificar las calificaciones en letras: 'A', 'B', 'C', etc.
+
+```sql
+SELECT nombre,
+    CASE
+        WHEN calificacion >= 90 THEN 'A'
+        WHEN calificacion >= 80 THEN 'B'
+        WHEN calificacion >= 70 THEN 'C'
+        WHEN calificacion >= 60 THEN 'D'
+        ELSE 'F'
+    END AS letra_calificacion
+FROM estudiantes;
+```
+
+### 2. Aplicar Descuentos en una Consulta
+
+Imagina que tenemos una tabla `productos` con columnas `precio` y `categoria`. Queremos aplicar diferentes descuentos según la categoría del producto.
+
+```sql
+SELECT nombre,
+    precio,
+    CASE
+        WHEN categoria = 'Electrónica' THEN precio * 0.90
+        WHEN categoria = 'Ropa' THEN precio * 0.80
+        WHEN categoria = 'Alimentos' THEN precio * 0.95
+        ELSE precio
+    END AS precio_con_descuento
+FROM productos;
+```
+
+### 3. Utilizar CASE en la Cláusula WHERE
+
+Queremos seleccionar productos según su disponibilidad y categoría.
+
+```sql
+SELECT *
+FROM productos
+WHERE
+    CASE
+        WHEN categoria = 'Electrónica' THEN stock > 10
+        WHEN categoria = 'Ropa' THEN stock > 20
+        ELSE stock > 5
+    END;
+```
+
+### 4. Ordenar Resultados con CASE
+
+Queremos ordenar los productos por categoría de manera personalizada.
+
+```sql
+SELECT nombre, categoria
+FROM productos
+ORDER BY
+    CASE
+        WHEN categoria = 'Electrónica' THEN 1
+        WHEN categoria = 'Ropa' THEN 2
+        WHEN categoria = 'Alimentos' THEN 3
+        ELSE 4
+    END;
+```
+
+### 5. Ejemplo Completo: Clasificación y Filtro
+
+Imaginemos que queremos mostrar el nombre del estudiante y su calificación en letras, pero solo para aquellos estudiantes que hayan obtenido una 'B' o más.
+
+```sql
+SELECT nombre,
+    CASE
+        WHEN calificacion >= 90 THEN 'A'
+        WHEN calificacion >= 80 THEN 'B'
+        WHEN calificacion >= 70 THEN 'C'
+        WHEN calificacion >= 60 THEN 'D'
+        ELSE 'F'
+    END AS letra_calificacion
+FROM estudiantes
+WHERE
+    CASE
+        WHEN calificacion >= 90 THEN 'A'
+        WHEN calificacion >= 80 THEN 'B'
+        WHEN calificacion >= 70 THEN 'C'
+        WHEN calificacion >= 60 THEN 'D'
+        ELSE 'F'
+    END IN ('A', 'B');
+```
+
+## Ventajas de Usar CASE WHEN
+
+1. **Flexibilidad**: Permite manejar múltiples condiciones y resultados en una sola instrucción.
+2. **Claridad**: Hace que las consultas sean más legibles y fáciles de entender.
+3. **Eficiencia**: Reduce la necesidad de múltiples consultas o subconsultas, optimizando el rendimiento de la base de datos.
+
+
+
 # Triggers
 Los triggers son herramientas poderosas que permiten automatizar tareas en nuestras bases de datos, mejorando la eficiencia y la seguridad. Vamos a explorar qué son, para qué sirven, cuándo se pueden usar y veremos algunos ejemplos prácticos.
 
@@ -1659,4 +1784,6 @@ END;
 
 
 
-Los triggers son herramientas poderosas y versátiles que pueden automatizar tareas importantes, mejorar la seguridad y garantizar la integridad de los datos en nuestras bases de
+Los triggers son herramientas poderosas y versátiles que pueden automatizar tareas importantes, mejorar la seguridad y garantizar la integridad de los datos en nuestras bases de datos
+
+
