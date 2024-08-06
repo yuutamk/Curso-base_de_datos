@@ -1051,6 +1051,8 @@ En resumen, los JOINs en SQL nos permiten manipular y analizar datos distribuido
 
 ![MEME](/SQL/src/meme-joins.jpg)
 
+![JOIN](/SQL/src/JOINS.webp)
+
 ### WHERE
 
 La cláusula `WHERE` se utiliza en SQL para filtrar registros en una consulta basándose en una condición específica. Al usar `WHERE`, puedes seleccionar sólo aquellos registros que cumplen ciertos criterios, lo que te permite trabajar de manera más eficiente y efectiva con tus datos.
@@ -1577,3 +1579,211 @@ WHERE posts.usuario_id IS NULL;
 - **FROM**: Los datos provienen de las tablas `usuarios` y `posts`.
 - **LEFT JOIN**: Usamos un `LEFT JOIN` para asegurarnos de incluir todos los usuarios, incluso aquellos sin posts asociados.
 - **WHERE**: Filtramos los usuarios donde `posts.usuario_id` es `NULL`, es decir, usuarios sin posts.
+
+
+# CASE
+
+
+La instrucción `CASE` en SQL es una estructura de control condicional que te permite ejecutar diferentes expresiones o devolver diferentes valores basados en condiciones específicas. Es similar a las estructuras `if-else` en otros lenguajes de programación.
+
+### Sintaxis Básica
+
+La sintaxis básica de `CASE WHEN` es la siguiente:
+
+```sql
+CASE
+    WHEN condición1 THEN resultado1
+    WHEN condición2 THEN resultado2
+    ...
+    ELSE resultado_final
+END
+```
+
+### ¿Dónde se Puede Usar?
+
+El `CASE` puede ser utilizado en diversas partes de una consulta SQL, tales como:
+
+- En la cláusula `SELECT` para modificar los valores que se devuelven.
+- En la cláusula `WHERE` para aplicar condiciones complejas.
+- En la cláusula `ORDER BY` para ordenar los resultados de manera personalizada.
+
+## Ejemplos Prácticos
+
+### 1. Clasificar Valores en una Consulta SELECT
+
+Supongamos que tenemos una tabla llamada `estudiantes` con una columna `calificacion`. Queremos clasificar las calificaciones en letras: 'A', 'B', 'C', etc.
+
+```sql
+SELECT nombre,
+    CASE
+        WHEN calificacion >= 90 THEN 'A'
+        WHEN calificacion >= 80 THEN 'B'
+        WHEN calificacion >= 70 THEN 'C'
+        WHEN calificacion >= 60 THEN 'D'
+        ELSE 'F'
+    END AS letra_calificacion
+FROM estudiantes;
+```
+
+### 2. Aplicar Descuentos en una Consulta
+
+Imagina que tenemos una tabla `productos` con columnas `precio` y `categoria`. Queremos aplicar diferentes descuentos según la categoría del producto.
+
+```sql
+SELECT nombre,
+    precio,
+    CASE
+        WHEN categoria = 'Electrónica' THEN precio * 0.90
+        WHEN categoria = 'Ropa' THEN precio * 0.80
+        WHEN categoria = 'Alimentos' THEN precio * 0.95
+        ELSE precio
+    END AS precio_con_descuento
+FROM productos;
+```
+
+### 3. Utilizar CASE en la Cláusula WHERE
+
+Queremos seleccionar productos según su disponibilidad y categoría.
+
+```sql
+SELECT *
+FROM productos
+WHERE
+    CASE
+        WHEN categoria = 'Electrónica' THEN stock > 10
+        WHEN categoria = 'Ropa' THEN stock > 20
+        ELSE stock > 5
+    END;
+```
+
+### 4. Ordenar Resultados con CASE
+
+Queremos ordenar los productos por categoría de manera personalizada.
+
+```sql
+SELECT nombre, categoria
+FROM productos
+ORDER BY
+    CASE
+        WHEN categoria = 'Electrónica' THEN 1
+        WHEN categoria = 'Ropa' THEN 2
+        WHEN categoria = 'Alimentos' THEN 3
+        ELSE 4
+    END;
+```
+
+### 5. Ejemplo Completo: Clasificación y Filtro
+
+Imaginemos que queremos mostrar el nombre del estudiante y su calificación en letras, pero solo para aquellos estudiantes que hayan obtenido una 'B' o más.
+
+```sql
+SELECT nombre,
+    CASE
+        WHEN calificacion >= 90 THEN 'A'
+        WHEN calificacion >= 80 THEN 'B'
+        WHEN calificacion >= 70 THEN 'C'
+        WHEN calificacion >= 60 THEN 'D'
+        ELSE 'F'
+    END AS letra_calificacion
+FROM estudiantes
+WHERE
+    CASE
+        WHEN calificacion >= 90 THEN 'A'
+        WHEN calificacion >= 80 THEN 'B'
+        WHEN calificacion >= 70 THEN 'C'
+        WHEN calificacion >= 60 THEN 'D'
+        ELSE 'F'
+    END IN ('A', 'B');
+```
+
+## Ventajas de Usar CASE WHEN
+
+1. **Flexibilidad**: Permite manejar múltiples condiciones y resultados en una sola instrucción.
+2. **Claridad**: Hace que las consultas sean más legibles y fáciles de entender.
+3. **Eficiencia**: Reduce la necesidad de múltiples consultas o subconsultas, optimizando el rendimiento de la base de datos.
+
+
+
+# Triggers
+Los triggers son herramientas poderosas que permiten automatizar tareas en nuestras bases de datos, mejorando la eficiencia y la seguridad. Vamos a explorar qué son, para qué sirven, cuándo se pueden usar y veremos algunos ejemplos prácticos.
+
+
+Un trigger, o disparador, es un script en lenguaje SQL que se asocia a una tabla específica. Este script se ejecuta automáticamente cuando se realizan ciertas operaciones en la tabla, como añadir, actualizar o eliminar registros. Los triggers se han usado en MySQL desde la versión 5.0.2 y en PostgreSQL desde 1997.
+
+### ¿Para Qué Sirve un Trigger?
+La función principal de los triggers es mejorar la gestión de la base de datos. Algunas de las ventajas clave incluyen:
+
+- Automatización: Realizan operaciones de forma automática, sin intervención humana, ahorrando tiempo.
+- Seguridad e Integridad: Aumentan la seguridad e integridad de la información al programar restricciones y verificaciones que minimizan errores y sincronizan la información.
+### ¿Cuándo Se Puede Usar un Trigger?
+Los triggers se ejecutan en respuesta a las acciones INSERT, UPDATE o DELETE en una tabla. Para usar un trigger, el usuario debe tener permisos de INSERT y DELETE en la base de datos correspondiente.
+
+### Tipos de Triggers
+Existen diferentes tipos de triggers según el momento en que se ejecutan:
+
+- BEFORE INSERT: Se ejecuta antes de que se inserte un nuevo registro.
+- AFTER INSERT: Se ejecuta después de que se inserte un nuevo registro.
+- BEFORE UPDATE: Se ejecuta antes de que se actualice un registro.
+- AFTER UPDATE: Se ejecuta después de que se actualice un registro.
+- BEFORE DELETE: Se ejecuta antes de que se elimine un registro.
+- AFTER DELETE: Se ejecuta después de que se elimine un registro.
+Ejemplos Prácticos
+Vamos a ver algunos ejemplos para entender mejor cómo funcionan los triggers.
+
+### Ejemplo 1: Trigger para Registrar Inserciones
+Supongamos que tenemos una tabla empleados y queremos registrar cada inserción en una tabla auditoria.
+
+```sql
+Copiar código
+CREATE TRIGGER after_employee_insert
+AFTER INSERT ON empleados
+FOR EACH ROW
+BEGIN
+    INSERT INTO auditoria (empleado_id, accion, fecha)
+    VALUES (NEW.id, 'INSERT', NOW());
+END;
+```
+- `AFTER INSERT`: Este trigger se ejecuta después de que se inserte un nuevo registro en empleados.
+- `FOR EACH ROW`: Se aplica a cada fila que se inserte.
+- `NEW.id`: Se refiere al ID del nuevo empleado insertado.
+accion y fecha: Registramos la acción 'INSERT' y la fecha actual.
+### Ejemplo 2: Trigger para Validar Actualizaciones
+Queremos asegurarnos de que los sueldos en la tabla empleados no se actualicen a valores negativos.
+
+```sql
+Copiar código
+CREATE TRIGGER before_salary_update
+BEFORE UPDATE ON empleados
+FOR EACH ROW
+BEGIN
+    IF NEW.sueldo < 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'El sueldo no puede ser negativo';
+    END IF;
+END;
+```
+- `BEFORE UPDATE`: Se ejecuta antes de que se actualice un registro en empleados.
+- `IF NEW.sueldo < 0`: Comprobamos si el nuevo sueldo es negativo.
+- `SIGNAL SQLSTATE '45000'`: Generamos un error si la condición se cumple.
+### Ejemplo 3: Trigger para Sincronizar Eliminaciones
+Queremos eliminar registros asociados en otra tabla cuando se elimina un empleado.
+
+```sql
+Copiar código
+CREATE TRIGGER after_employee_delete
+AFTER DELETE ON empleados
+FOR EACH ROW
+BEGIN
+    DELETE FROM proyectos WHERE empleado_id = OLD.id;
+END;
+```
+
+- `AFTER DELETE`: Se ejecuta después de que se elimine un registro en empleados.
+- `OLD.id`: Se refiere al ID del empleado eliminado.
+- `DELETE FROM proyectos`: Eliminamos los registros en proyectos donde el empleado_id coincida.
+
+
+
+Los triggers son herramientas poderosas y versátiles que pueden automatizar tareas importantes, mejorar la seguridad y garantizar la integridad de los datos en nuestras bases de datos
+
+
