@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## Prueba Final
 
 #### 1. Acceder a phpMyAdmin
@@ -336,7 +335,7 @@ WHERE comentarios.usuario_id = 1;
   </details>
 
 
-=======
+---
 ## Prueba Final
 
 #### 1. Acceder a phpMyAdmin
@@ -674,4 +673,4 @@ WHERE comentarios.usuario_id = 1;
   </details>
 
 
->>>>>>> dcc1b067cd662e6d63beaa544cb715d2435d5ee7
+

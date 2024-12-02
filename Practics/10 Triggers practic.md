@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ### Paso a Paso para Crear la Base de Datos y Aplicar Triggers en SQL usando phpMyAdmin
 
 #### Paso 1: Crear la Base de Datos
@@ -118,7 +117,8 @@
     SELECT * FROM auditoria;
     ```
 
-=======
+---
+
 ### Paso a Paso para Crear la Base de Datos y Aplicar Triggers en SQL usando phpMyAdmin
 
 #### Paso 1: Crear la Base de Datos
@@ -238,5 +238,3 @@
     SELECT * FROM auditoria;
     ```
 
->>>>>>> dcc1b067cd662e6d63beaa544cb715d2435d5ee7
-Este es el proceso completo para crear la base de datos, tablas, y aplicar los triggers mencionados. Cada trigger cumple con un propósito específico y ayuda a mantener la integridad y consistencia de los datos en la base de datos.

@@ -1,3 +1,4 @@
+# From join
 
 #### 1. Acceder a phpMyAdmin
 1. **Abre phpMyAdmin** en tu navegador (`http://localhost/phpmyadmin`).

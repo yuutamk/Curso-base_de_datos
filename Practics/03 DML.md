@@ -1,6 +1,4 @@
-
-
-Insertar un registro en la tabla 'people'
+# Insertar un registro en la tabla 'people'
 
 ```sql
 
