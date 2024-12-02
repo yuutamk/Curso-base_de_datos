@@ -2,7 +2,7 @@
 
 ¡Hola a todos! En este espacio, vamos a embarcarnos en una emocionante aventura por el fascinante mundo de las bases de datos, específicamente enfocándonos en SQL (Structured Query Language). Pero antes de sumergirnos en el código y las consultas, echemos un vistazo a la historia, los tipos de bases de datos y los conceptos clave que nos ayudarán a entender mejor este vasto universo.
 
-![database](/SQL/src/SQL.webp)
+![database](./src/SQL.webp)
 
 #### **Introducción a Base de Datos**
 
@@ -47,7 +47,7 @@ Estas dificultades, entre otras, motivaron el desarrollo de los sistemas de base
 
 #### **2. Tipos de Bases de Datos**
 
-![tipos de base de tatos](/SQL/src/DB_Tipos.png)
+![tipos de base de tatos](./src/DB_Tipos.png)
 
 Existen varios tipos de bases de datos, cada una adecuada para diferentes tipos de aplicaciones y necesidades. Aquí mencionamos algunas de las más comunes:
 
@@ -56,7 +56,7 @@ Existen varios tipos de bases de datos, cada una adecuada para diferentes tipos 
   - Ejemplos: MySQL, PostgreSQL, Oracle Database.
   - Ideales para aplicaciones empresariales donde la integridad de los datos y las relaciones entre los datos son cruciales.
 
-    ![Database relacionales](/SQL/src/DB_Relacionales_ejemplos.png)
+    ![Database relacionales](./src/DB_Relacionales_ejemplos.png)
 
 - **Bases de Datos NoSQL:**
   - Diseñadas para gestionar datos no estructurados.
@@ -64,7 +64,7 @@ Existen varios tipos de bases de datos, cada una adecuada para diferentes tipos 
   - Ideales para aplicaciones que requieren alta flexibilidad y escalabilidad, como aplicaciones web y de análisis de grandes volúmenes de datos.
 
 
-    ![Database no rlacional](/SQL/src/DB_NoRelacionales_ejemplos.png)
+    ![Database no rlacional](./src/DB_NoRelacionales_ejemplos.png)
 
 - **Bases de Datos Orientadas a Grafos:**
   - Utilizan grafos para representar y almacenar datos.
@@ -91,7 +91,7 @@ Un diagrama ER es una representación gráfica de las entidades (objetos) y las 
 - **Relaciones:** Representadas como rombos, describen cómo las entidades están relacionadas entre sí.
 - **Atributos:** Representados como óvalos, son propiedades o características de las entidades.
 
-![Diagramas](/SQL/src/diagrama%20ERE.png)
+![Diagramas](./src/diagrama%20ERE.png)
 
 **Diagramas Físicos:**
 Un diagrama físico muestra cómo los datos serán almacenados físicamente en una base de datos. Incluye detalles como el tipo de datos, las restricciones y las claves primarias y foráneas. Este tipo de diagrama es crucial para la implementación real de la base de datos.
@@ -173,7 +173,7 @@ El Modelo Entidad-Relación (ER) es un enfoque conceptual que permite describir 
 5. **Jerarquías de Generalización:**
    Las jerarquías de generalización permiten la representación de relaciones jerárquicas entre entidades. Por ejemplo, una entidad "Empleado" puede tener subentidades como "Gerente" y "Asistente", que heredan atributos de "Empleado".
 
-    ![entidad relacion](/SQL/src/Diagrama_Entidades-Atributos.webp)
+    ![entidad relacion](./src/Diagrama_Entidades-Atributos.webp)
 
 ## Aplicaciones Prácticas del Modelo Entidad-Relación
 
@@ -185,7 +185,7 @@ El Modelo ER se utiliza en una amplia variedad de industrias y aplicaciones. Alg
 - **Sistemas de Gestión de Recursos Humanos:** Para organizar información sobre empleados, departamentos, salarios y beneficios.
 
 
-    ![Diagrama ejemplo entidad relacion](/SQL/src/Diagrama_Entidades-Atributos_Ejemplo.webp)
+    ![Diagrama ejemplo entidad relacion](./src/Diagrama_Entidades-Atributos_Ejemplo.webp)
 ## Ejemplo Práctico: Un Sistema de Gestión de Bibliotecas
 
 Consideremos un ejemplo práctico para ilustrar el uso del Modelo ER en el diseño de un sistema de gestión de bibliotecas.
@@ -245,7 +245,7 @@ Un diagrama físico es una representación detallada de cómo se implementarán 
 
 Elegir los tipos de datos correctos es crucial para la eficiencia y precisión del almacenamiento de datos. Los tipos de datos definen el tipo de información que se puede almacenar en una columna de una tabla. Aquí hay algunos de los tipos de datos más comunes:
 
-![tipos datos](/SQL/src/tiposDatos.jpg)
+![tipos datos](./src/tiposDatos.jpg)
 
 ### 1. Numéricos
 
@@ -273,13 +273,13 @@ Elegir los tipos de datos correctos es crucial para la eficiencia y precisión d
 
 - **BLOB:** Datos binarios grandes. Útil para almacenar imágenes y archivos.
 
-![tipos de datos](/SQL/src/tiposDatos2.jpg)
+![tipos de datos](./src/tiposDatos2.jpg)
 
 ## Constraints (restricciones)
 
 Las constraints son reglas aplicadas a las columnas de las tablas para asegurar la precisión y consistencia de los datos. Aquí hay algunas de las constraints más comunes:
 
-![restricciones](/SQL/src/restricciones.jpg)
+![restricciones](./src/restricciones.jpg)
 
 
 * NOT NULL: Se asegura que la columna no tenga valores nulos
@@ -321,9 +321,9 @@ La normalización es un proceso de organización de los datos en una base de dat
 
 Edgar F. Codd, el padre del modelo relacional de bases de datos, definió una serie de reglas para lograr una base de datos normalizada. Cada regla se denomina forma normal (FN), y a medida que avanzamos de una forma normal a la siguiente, aumentamos el nivel de organización y eficiencia de la base de datos.
 
-![normalizacion](/SQL/src/sin%20normalizar.webp)
+![normalizacion](./src/sin%20normalizar.webp)
 
-Normalizada ![normalizada](/SQL/src/normalizada.webp)
+Normalizada ![normalizada](./src/normalizada.webp)
 
 ### 1. Primera Forma Normal (1NF)
 
@@ -347,7 +347,7 @@ Los campos deben ser tales que si reordenamos los registros o reordenamos las co
 
 **Ejemplo:**
 
-![primera forma normal](/SQL/src/primera%20forma%20normal.jpg)
+![primera forma normal](./src/primera%20forma%20normal.jpg)
 
 Una tabla no normalizada podría tener:
 
@@ -377,12 +377,12 @@ Para que una tabla esté en la segunda forma normal (2NF), debe cumplir con los 
 
 Lo anterior quiere decir que sí tenemos datos que pertenecen a diversas entidades, cada entidad debe tener un campo clave separado.
 
-![segunda forma normal](/SQL/src/segunda%20forma%20normal2.jpg)
+![segunda forma normal](./src/segunda%20forma%20normal2.jpg)
 
 
 En la tabla anterior tenemos por lo menos dos entidades que debemos separar para que cada uno dependa de manera única de su campo llave o ID. En este caso las entidades son alumnos por un lado y materias por el otro. En el ejemplo anterior, quedaría de la siguiente manera:
 
-![segunda forma normal](/SQL/src/segunda%20forma%20normal.jpg)
+![segunda forma normal](./src/segunda%20forma%20normal.jpg)
 
 **Ejemplo:**
 Una tabla en 1NF:
@@ -417,11 +417,11 @@ Para que una tabla esté en la tercera forma normal (3NF), debe cumplir con los 
 
 Esta FN se traduce en que aquellos datos que no pertenecen a la entidad deben tener una independencia de las demás y debe tener un campo clave propio. Continuando con el ejemplo anterior, al aplicar la 3FN separamos la tabla alumnos ya que contiene datos de los cursos en ella quedando de la siguiente manera.
 
-![tercera forma normal](/SQL/src/tercera%20forma%20normal%20jem1.webp)
+![tercera forma normal](./src/tercera%20forma%20normal%20jem1.webp)
 
-![tercera forma normal](/SQL/src/tercera%20forma%20normal%20jem2.webp)
+![tercera forma normal](./src/tercera%20forma%20normal%20jem2.webp)
 
-![tercera forma normal](/SQL/src/tercera%20forma%20normal.jpg)
+![tercera forma normal](./src/tercera%20forma%20normal.jpg)
 
 **Ejemplo:**
 Una tabla en 2NF:
@@ -454,11 +454,11 @@ Esta FN trata de eliminar registros duplicados en una entidad, es decir que cada
 
 Aplicado al ejemplo anterior la tabla materia se independiza y se relaciona con el alumno a través de una tabla transitiva o pivote, de tal manera que si cambiamos el nombre de la materia solamente hay que cambiarla una vez y se propagara a cualquier referencia que haya de ella.
 
-![cuarta forma normal](/SQL/src/cuarta%20forma%20normal%20ejem1.webp)
+![cuarta forma normal](./src/cuarta%20forma%20normal%20ejem1.webp)
 
-![cuarta forma normal](/SQL/src/cuarta%20forma%20normal%20ejem2.webp)
+![cuarta forma normal](./src/cuarta%20forma%20normal%20ejem2.webp)
 
-![cuarta forma normal](/SQL/src/cuarta%20forma%20normal.jpg)
+![cuarta forma normal](./src/cuarta%20forma%20normal.jpg)
 
 
 De esta manera, aunque parezca que la información se multiplicó, en realidad la descompusimos o normalizamos de manera que a un sistema le sea fácil de reconocer y mantener la consistencia de los datos.
@@ -927,8 +927,8 @@ Los SQL JOINs se utilizan para combinar filas de dos o más tablas basadas en un
 
 En teoría de conjuntos, un conjunto es una colección de elementos. Los diagramas de Venn son representaciones gráficas de conjuntos y sus relaciones entre sí.
 
-![Diagrama de Venn](/SQL/src/join-diferencia.webp)
-![](/SQL/src/join-interseccion.webp)
+![Diagrama de Venn](./src/join-diferencia.webp)
+![](./src/join-interseccion.webp)
 *Ejemplo de diagrama de Venn básico*
 
 A continuación, veamos cómo se relacionan los distintos tipos de JOINs con los diagramas de Venn:
@@ -1049,13 +1049,13 @@ WHERE	posts.usuario_id IS NULL;
 
 En resumen, los JOINs en SQL nos permiten manipular y analizar datos distribuidos en múltiples tablas. Al comprender la teoría de conjuntos y visualizar estos conceptos con diagramas de Venn, podemos profundizar en cómo funcionan estas combinaciones y aplicar estas técnicas de manera efectiva en nuestras bases de datos.
 
-![MEME](/SQL/src/meme-joins.jpg)
+![MEME](./src/meme-joins.jpg)
 
-<<<<<<< HEAD
-![JOIN](/SQL/src/JOINS.webp)
-=======
-![JOIN](/src/JOINS.webp)
->>>>>>> dcc1b067cd662e6d63beaa544cb715d2435d5ee7
+
+![JOIN](./src/JOINS.webp)
+
+![JOIN](./src/JOINS.webp)
+
 
 ### WHERE
 
