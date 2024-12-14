@@ -10,7 +10,7 @@
         DROP USER 'nombre_usuario'@'localhost' 
     ...
 
--- Para darle privilegios aun usuario:   
+-- Para darle privilegios a un usuario:   
     
 -- Para tener todo los privilegios sobre todas las tablas posibles:
         
