@@ -1,9 +1,9 @@
 -- Ejemplos select
-SELECT	*
-FROM		posts;
+SELECT *
+FROM posts;
 
 SELECT	titulo, fecha_publicacion, estatus
-FROM		posts;
+FROM posts;
 
 SELECT	titulo AS encabezado, fecha_publicacion AS publicado, estatus AS estado
 FROM		posts;
