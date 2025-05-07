@@ -2,6 +2,8 @@ CREATE DATABASE test_db;
 
 USE test_db;
 
+SHOW DATABASES;
+
 CREATE TABLE people (
 	person_id int,
 	last_name varchar(255),
@@ -37,6 +39,6 @@ CREATE VIEW v_brasil_customers AS
 	WHERE country = 'Brasil';
 
 /* Create view people */
-CREATE VIEW v_people AS
-	SELECT person_id, last_name, first_name, address, city
+CREATE VIEW v2_people AS
+	SELECT person_id, last_name, city
 	FROM people;

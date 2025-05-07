@@ -22,7 +22,7 @@ Una vez creado tu diagrama puedes ahora crear tu diagrama fisico tomando en cuen
 <details>
   <summary>Diagrama Físico</summary>
   <p>
-  <img src="../SQL/src/Diagrama blogpost.png">
+  <img src="../src/Diagrama blogpost.png">
   </p>
   </details>
 
@@ -31,7 +31,7 @@ Una vez creado tu diagrama puedes ahora crear tu diagrama fisico tomando en cuen
 <details>
   <summary>Diagrama Físico normalizado</summary>
   <p>
-  <img src="../SQL/src/diagrama%20blogpost%20normalizado.png">
+  <img src="../src/diagrama%20blogpost%20normalizado.png">
   </p>
   </details>
 
